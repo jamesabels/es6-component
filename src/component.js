@@ -3,7 +3,6 @@ export default class Component {
         this.options = options;
         this.model = options.model;
         this.markup = options.markup;
-        this.methods = options.methods;
         this.id = options.id;
         return this.create(
             options.id,
@@ -30,8 +29,8 @@ export default class Component {
         return this.markup();
     }
 
-    call (method) {
-        return this.methods[method]();
+    call (callback) {
+        return callback(this.model);
     }
 
     beforeUpdate (model) {

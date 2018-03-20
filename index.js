@@ -17,10 +17,6 @@ let markup = function () {
     </div>`
 }
 
-let methods = {
-    helloWorld: () => console.log('Hello World')
-}
-
 let newComp = new Component({
     id: 'new-comp-wrap',
     classes: ['new-comp-wrap', 'new-comp'],
@@ -30,7 +26,6 @@ let newComp = new Component({
     whenUnmounted: () => console.log('Unmounted!'),
     beforeUpdate: () => console.log('Before Update!'),
     whenUpdated: () => console.log('After Update!'),
-    methods,
     model,
     markup
 });
@@ -44,6 +39,6 @@ let update = setInterval(function () {
 
 setTimeout(function () {
     clearInterval(update);
-    newComp.call('helloWorld');
+    newComp.call((model) => console.log('Hello Model ', model));
     newComp.unmount();
 }, 200)
