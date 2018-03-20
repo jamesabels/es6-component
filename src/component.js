@@ -3,6 +3,7 @@ export default class Component {
         this.options = options;
         this.model = options.model;
         this.markup = options.markup;
+        this.methods = options.methods;
         this.id = options.id;
         return this.create(
             options.id,
@@ -29,21 +30,51 @@ export default class Component {
         return this.markup();
     }
 
+    call (method) {
+        return this.methods[method]();
+    }
+
+    beforeUpdate (model) {
+        return this.options.beforeUpdate(model);
+    }
+
     update (model) {
-        if ( JSON.stringify(this.model) === JSON.stringify(model) ) {
-          return console.warn('Warning: this.model matches updated model');
-        } else {
-            this.model = model;
-            return document.getElementById(this.id).innerHTML = this.render(this.model);    
-        }
+        this.model = model;
+        this.beforeUpdate(this.model);
+        document.getElementById(this.id).innerHTML = this.render(this.model);    
+        return this.whenUpdated(this.model);
+    }
+
+    whenUpdated (model) {
+        return this.options.whenUpdated(model);
+    }
+
+    beforeMount (model) {
+        return this.options.beforeMount(model);
     }
 
     mount (anchor) {
+        this.beforeMount(this.model);
         this.anchor = anchor;
-        return document.querySelector(anchor).appendChild(this.self);
+        document.querySelector(anchor).appendChild(this.self);
+        return this.whenMounted(this.model);
+    }
+
+    whenMounted (model) {
+        return this.options.whenMounted(model);
+    }
+
+    beforeUnmount (model) {
+        return this.options.beforeUnmount(model);
     }
 
     unmount () {
-        return document.getElementById(this.id).remove();
+        this.beforeUnmount(this.model);
+        document.getElementById(this.id).remove();
+        return this.whenUnmounted(this.model);
+    }
+
+    whenUnmounted (model) {
+        return this.options.whenUnmounted(model);
     }
 }

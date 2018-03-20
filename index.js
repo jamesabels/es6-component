@@ -17,9 +17,20 @@ let markup = function () {
     </div>`
 }
 
+let methods = {
+    helloWorld: () => console.log('Hello World')
+}
+
 let newComp = new Component({
     id: 'new-comp-wrap',
     classes: ['new-comp-wrap', 'new-comp'],
+    beforeMount: () => console.log('Before Mount!'),
+    whenMounted: () => console.log('Mounted!'),
+    beforeUnmount: () => console.log('Before Unmount!'),
+    whenUnmounted: () => console.log('Unmounted!'),
+    beforeUpdate: () => console.log('Before Update!'),
+    whenUpdated: () => console.log('After Update!'),
+    methods,
     model,
     markup
 });
@@ -27,11 +38,12 @@ let newComp = new Component({
 newComp.mount('#app');
 
 let update = setInterval(function () {
-    model.job = 1;
+    model.job = Math.random(100);
     newComp.update(model);
 }, 1);
 
 setTimeout(function () {
     clearInterval(update);
+    newComp.call('helloWorld');
     newComp.unmount();
-}, 5000)
+}, 200)
