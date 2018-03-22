@@ -31,14 +31,3 @@ let newComp = new Component({
 });
 
 newComp.mount('#app');
-
-let update = setInterval(function () {
-    model.job = Math.random(100);
-    newComp.update(model);
-}, 1);
-
-setTimeout(function () {
-    clearInterval(update);
-    newComp.call((model) => console.log('Hello Model ', model));
-    newComp.unmount();
-}, 200)
