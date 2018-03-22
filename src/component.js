@@ -1,10 +1,12 @@
+import Util from './util';
+
 export default class Component {
     constructor(options) {
         this.options = options;
         this.model = options.model;
         this.markup = options.markup;
         this.id = options.id;
-        return this.create(
+        this.create(
             options.id,
             options.classes,
             this.render(this.model)
@@ -21,7 +23,8 @@ export default class Component {
         });
         // Set Markup
         el.innerHTML = markup;
-        // Set Element
+
+        // Set the element
         this.self = el;
     }
 
@@ -38,10 +41,14 @@ export default class Component {
     }
 
     update (model) {
-        this.model = model;
-        this.beforeUpdate(this.model);
-        document.getElementById(this.id).innerHTML = this.render(this.model);    
-        return this.whenUpdated(this.model);
+        if (Util.deepObjectCompare(model, this.model)) {
+            console.warn('The model provided and this.model are the same!');
+        } else {
+            this.model = model;
+            this.beforeUpdate(this.model);
+            document.getElementById(this.id).innerHTML = this.render(this.model);    
+            return this.whenUpdated(this.model);    
+        }
     }
 
     whenUpdated (model) {
@@ -52,10 +59,10 @@ export default class Component {
         return this.options.beforeMount(model);
     }
 
-    mount (anchor) {
+    mount (context, anchor) {
         this.beforeMount(this.model);
         this.anchor = anchor;
-        document.querySelector(anchor).appendChild(this.self);
+        context.querySelector(anchor).appendChild(this.self);
         return this.whenMounted(this.model);
     }
 
