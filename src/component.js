@@ -46,7 +46,7 @@ export default class Component {
         } else {
             this.model = model;
             this.beforeUpdate(this.model);
-            document.getElementById(this.id).innerHTML = this.render(this.model);    
+            document.getElementById(this.id).innerHTML = this.render(this.model);
             return this.whenUpdated(this.model);    
         }
     }

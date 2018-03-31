@@ -1,23 +1,68 @@
-import Component from './src/component';
+import UniversalForm from './src/UniversalForm';
 
 let model = {
-    name: 'Dave',
-    job: 'Gorilla',
-    location: 'The Zoo',
-    bio: 'Dave loves his job at the zoo!'
+    fields : [
+        {
+            type: 'text',
+            id: 'valueOne',
+            name: 'value_one',
+            label: 'Click To Edit',
+            initialValue: 'Value One',
+            placeHolder: 'Value One',
+            classList: ['form-li', 'meme']
+        },
+        {
+            type: 'email',
+            id: 'valueOne',
+            name: 'value_two',
+            label: 'Click To Edit',
+            initialValue: 'value@test.com',
+            placeHolder: 'Value Two',
+            classList: ['form-li', 'meme']
+        },
+        {
+            type: 'number',
+            id: 'numberOne',
+            name: 'number_one',
+            label: 'Click To Edit',
+            initialValue: 1,
+            placeHolder: 2,
+            classList: ['form-li', 'meme']
+        },
+        {
+            type: 'file',
+            id: 'fileOne',
+            name: 'file_one',
+            label: 'Click To Edit',
+            initialValue: '',
+            placeHolder: '',
+            classList: ['form-li', 'meme']
+        },
+        {
+            type: 'select',
+            id: 'valueOne',
+            name: 'value_three',
+            label: 'Click To Edit',
+            initialValue: 'One',
+            placeHolder: 'Value Three',
+            classList: ['form-li', 'meme'],
+            options: [
+                { label: 'one', value: 1 },
+                { label: 'two', value: 2 },
+                { label: 'three', value: 3 },
+            ]
+        },
+        {
+            type: 'submit',
+            id: 'submitButton',
+            name: 'submit_button',
+            initialValue: 'Submit',
+            classList: ['form-li', 'meme']
+        },
+    ]
 }
 
-let markup = function () {
-    return  `
-    <div class="person">
-        <h1>${model.name}</h1>
-        <h3>${model.job}</h3>
-        <p class="location">${model.location}</p>
-        <p class="bio">${model.bio}</p>
-    </div>`
-}
-
-let newComp = new Component({
+let newComp = new UniversalForm({
     id: 'new-comp-wrap',
     classes: ['new-comp-wrap', 'new-comp'],
     beforeMount: () => console.log('Before Mount!'),
@@ -26,8 +71,7 @@ let newComp = new Component({
     whenUnmounted: () => console.log('Unmounted!'),
     beforeUpdate: () => console.log('Before Update!'),
     whenUpdated: () => console.log('After Update!'),
-    model,
-    markup
+    model
 });
 
-newComp.mount('#app');
+newComp.mount(document, '#app');

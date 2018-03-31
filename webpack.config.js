@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  target: 'node',
   entry: {
     component: './src/component.js',
     index: './index.js'
